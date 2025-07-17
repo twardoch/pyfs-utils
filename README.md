@@ -1,8 +1,20 @@
 # pyfs-utils
 
+[![CI](https://github.com/twardoch/pyfs-utils/actions/workflows/ci.yml/badge.svg)](https://github.com/twardoch/pyfs-utils/actions/workflows/ci.yml)
+[![Release](https://github.com/twardoch/pyfs-utils/actions/workflows/release.yml/badge.svg)](https://github.com/twardoch/pyfs-utils/actions/workflows/release.yml)
+[![PyPI version](https://badge.fury.io/py/pyfs-utils.svg)](https://badge.fury.io/py/pyfs-utils)
+[![Python versions](https://img.shields.io/pypi/pyversions/pyfs-utils.svg)](https://pypi.org/project/pyfs-utils/)
+[![License](https://img.shields.io/badge/license-CC0--1.0-blue.svg)](LICENSE.txt)
+
 **pyfs-utils** is a Python library designed to provide a collection of utilities that simplify and extend working with [PyFilesystem2](https://pyfilesystem.org/). PyFilesystem2 (or `fs`) is a powerful Python abstraction layer for various filesystems, allowing you to interact with local files, S3 buckets, FTP servers, ZIP files, and many more through a consistent API. This project aims to build upon that foundation, offering tools and helpers to make your filesystem interactions even more straightforward and robust.
 
-This project is currently in its initial stages and provides a foundational structure and examples for building such utilities.
+This project features:
+- **Git-tag-based semantic versioning**: Automatic version management using git tags
+- **Comprehensive CI/CD pipeline**: GitHub Actions for testing, building, and releasing
+- **Multiplatform support**: Works on Linux, Windows, and macOS
+- **Binary distributions**: Standalone executables for easy installation
+- **Complete test suite**: 100% test coverage with pytest
+- **Development tools**: Scripts for building, testing, and releasing
 
 ## What This Tool Does
 
@@ -36,9 +48,15 @@ As the library grows, it will become a valuable toolkit for anyone leveraging Py
 
 ## Installation
 
-You can install `pyfs-utils` from source.
+### From PyPI (Recommended)
 
-1.  **Clone the repository (if you haven't already):**
+```bash
+pip install pyfs-utils
+```
+
+### From Source
+
+1.  **Clone the repository:**
     ```bash
     git clone https://github.com/twardoch/pyfs-utils.git
     cd pyfs-utils
@@ -53,6 +71,15 @@ You can install `pyfs-utils` from source.
     ```bash
     pip install -e .
     ```
+
+### Binary Downloads
+
+Standalone executables are available for download from the [releases page](https://github.com/twardoch/pyfs-utils/releases) for:
+- Linux (x86_64)
+- Windows (x86_64) 
+- macOS (x86_64 and arm64)
+
+No Python installation required for binary distributions.
 
 ### Dependencies
 
@@ -111,6 +138,58 @@ print(f"The {number}-th Fibonacci number is {result}")
 #     print(item)
 ```
 As actual filesystem utilities are added, you'll be able to import them and use them with PyFilesystem2 URLs or FS objects.
+
+---
+
+## Development and Release
+
+This project uses modern Python development practices with automated CI/CD:
+
+### Quick Development Setup
+
+```bash
+# Clone and set up development environment
+git clone https://github.com/twardoch/pyfs-utils.git
+cd pyfs-utils
+make setup  # or ./scripts/dev-setup.sh
+
+# Run tests
+make test   # or ./scripts/test.sh
+
+# Build package
+make build  # or ./scripts/build.sh
+
+# Create binary
+./scripts/create-binary.sh
+```
+
+### Available Commands
+
+- `make help` - Show all available commands
+- `make test` - Run tests with coverage
+- `make build` - Build the package
+- `make clean` - Clean build artifacts
+- `make lint` - Run linting
+- `make format` - Format code
+- `make release VERSION=x.y.z` - Release a new version
+
+### Release Process
+
+1. **Semantic Versioning**: The project uses git tags for versioning (e.g., `v1.0.0`)
+2. **Automated Releases**: Push a git tag to trigger automated release via GitHub Actions
+3. **Multi-platform Builds**: CI automatically builds for Linux, Windows, and macOS
+4. **Binary Distributions**: Standalone executables are created using PyInstaller
+5. **PyPI Publishing**: Packages are automatically published to PyPI on release
+
+### CI/CD Pipeline
+
+- **Continuous Integration**: Tests run on every push/PR across multiple Python versions and OS
+- **Security Scanning**: Automated security checks using bandit and safety
+- **Code Quality**: Linting, formatting, and type checking
+- **Release Automation**: Automatic releases triggered by git tags
+- **Binary Creation**: Standalone executables for easy distribution
+
+For detailed development instructions, see [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ---
 
