@@ -1,22 +1,16 @@
-import sys
+# this_file: src/pyfs_utils/__init__.py
+"""pyfs-utils: Utility library for working with files across PyFilesystem2 backends.
 
-if sys.version_info[:2] >= (3, 8):
-    # TODO: Import directly (no need for conditional) when `python_requires = >= 3.8`
-    from importlib.metadata import (
-        PackageNotFoundError,  # pragma: no cover
-        version,
-    )
-else:
-    from importlib_metadata import (
-        PackageNotFoundError,  # pragma: no cover
-        version,
-    )
+Provides helpers for local disk, S3, Dropbox, WebDAV, SSH, Google Drive,
+Git repositories, archives, and any other PyFilesystem2-compatible backend
+through a single unified API.
+"""
+
+from importlib.metadata import PackageNotFoundError, version
 
 try:
-    # Change here if project is renamed and does not equal the package name
-    dist_name = "pyfs-utils"
-    __version__ = version(dist_name)
+    __version__: str = version("pyfs-utils")
 except PackageNotFoundError:  # pragma: no cover
     __version__ = "unknown"
-finally:
-    del version, PackageNotFoundError
+
+__all__ = ["__version__"]

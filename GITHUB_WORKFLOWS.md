@@ -1,6 +1,6 @@
 # GitHub Actions Workflows
 
-Since the GitHub App doesn't have permission to create workflow files, please create these files manually in your repository:
+The GitHub App lacks permissions to create workflow files. You must add these manually to your repository.
 
 ## 1. Create `.github/workflows/ci.yml`
 
@@ -24,7 +24,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Needed for setuptools_scm
+        fetch-depth: 0  # Required for setuptools_scm
     
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
@@ -378,26 +378,26 @@ updates:
 
 ## Setup Instructions
 
-1. **Create the directories**:
+1. **Create directories**:
    ```bash
    mkdir -p .github/workflows
    ```
 
-2. **Create each workflow file** with the content above
+2. **Add workflow files** using content above
 
-3. **Set up repository secrets** (in GitHub Settings > Secrets and variables > Actions):
-   - `PYPI_TOKEN`: Your PyPI API token (optional, for publishing)
-   - `TEST_PYPI_TOKEN`: Your Test PyPI API token (optional)
-   - `CODECOV_TOKEN`: Your Codecov token (optional, for coverage reports)
+3. **Configure repository secrets** (GitHub Settings > Secrets and variables > Actions):
+   - `PYPI_TOKEN`: PyPI API token (optional)
+   - `TEST_PYPI_TOKEN`: Test PyPI API token (optional)
+   - `CODECOV_TOKEN`: Codecov token (optional)
 
-4. **Test the workflows**:
-   - Push to main/develop branch to trigger CI
-   - Create and push a git tag to trigger release workflow
+4. **Verify workflows**:
+   - Push to main/develop triggers CI
+   - Git tag push triggers release workflow
 
 ## Notes
 
-- The workflows are designed to work with the current project structure
-- Binary creation uses PyInstaller for standalone executables
-- Security scanning runs weekly and on pushes
-- Dependabot will automatically update dependencies
-- All workflows include proper error handling and artifact uploads
+- Workflows assume standard project structure
+- PyInstaller creates standalone binaries
+- Security scans run weekly and on pushes
+- Dependabot handles dependency updates automatically
+- Error handling and artifact uploads included in all workflows

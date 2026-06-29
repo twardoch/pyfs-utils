@@ -1,8 +1,108 @@
+# this_file: pyproject.toml
 [build-system]
-# AVOID CHANGING REQUIRES: IT WILL BE UPDATED BY PYSCAFFOLD!
-requires = ["setuptools>=46.1.0", "setuptools_scm[toml]>=5", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
-[tool.setuptools_scm]
-# See configuration details in https://github.com/pypa/setuptools_scm
-version_scheme = "no-guess-dev"
+[project]
+name = "pyfs-utils"
+dynamic = ["version"]
+description = "Utility library for working with files across PyFilesystem2 backends"
+readme = "README.md"
+license = "CC0-1.0"
+requires-python = ">=3.10"
+authors = [
+    { name = "Adam Twardoch", email = "adam+github@twardoch.com" },
+]
+keywords = ["filesystem", "pyfilesystem", "fs", "utilities", "s3", "dropbox", "ssh"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Filesystems",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "fs>=2.4",
+]
+
+[project.optional-dependencies]
+s3 = ["fs-s3fs"]
+dropbox = ["fs.dropboxfs"]
+webdav = ["fs.webdavfs"]
+ssh = ["fs.sshfs"]
+archive = ["fs.archive"]
+googledrive = ["fs.googledrivefs"]
+gcs = ["fs-gcsfs"]
+all = [
+    "fs-s3fs",
+    "fs.dropboxfs",
+    "fs.webdavfs",
+    "fs.sshfs",
+    "fs.archive",
+    "fs.googledrivefs",
+    "fs-gcsfs",
+]
+
+[project.scripts]
+pyfs-fibonacci = "pyfs_utils.skeleton:run"
+
+[project.urls]
+Homepage = "https://github.com/twardoch/pyfs-utils"
+Repository = "https://github.com/twardoch/pyfs-utils"
+Issues = "https://github.com/twardoch/pyfs-utils/issues"
+Documentation = "https://twardoch.github.io/pyfs-utils/"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/pyfs_utils/__version__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyfs_utils"]
+
+[tool.hatch.envs.hatch-test]
+extra-dependencies = [
+    "pytest-cov",
+]
+
+[tool.hatch.envs.default]
+dependencies = [
+    "pytest>=8",
+    "pytest-cov",
+    "mypy>=1.10",
+    "ruff>=0.4",
+]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+cov = "pytest --cov=pyfs_utils --cov-report=term-missing {args:tests}"
+lint = "ruff check src/ tests/"
+fmt = "ruff format src/ tests/"
+typecheck = "mypy src/pyfs_utils/"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--verbose"
+
+[tool.ruff]
+target-version = "py310"
+src = ["src"]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

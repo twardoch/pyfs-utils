@@ -1,0 +1,37 @@
+# this_file: docs/_config.yml
+title: pyfs-utils
+description: Utility library for working with files across PyFilesystem2 backends
+baseurl: "/pyfs-utils"
+url: "https://twardoch.github.io"
+
+theme: minima
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+permalink: pretty
+
+nav:
+  - title: Home
+    url: /
+  - title: API
+    url: /api/
+  - title: Backends
+    url: /backends/
+  - title: Changelog
+    url: /changelog/
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+author:
+  name: Adam Twardoch
+  email: adam+github@twardoch.com
+
+github:
+  repository_url: https://github.com/twardoch/pyfs-utils

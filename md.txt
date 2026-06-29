@@ -1,0 +1,10 @@
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/AUTHORS.md
+
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/DEVELOPMENT.md
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/docs/authors.md
+
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/docs/index.md
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/docs/readme.md
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/GITHUB_WORKFLOWS.md
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/IMPLEMENTATION_SUMMARY.md
+/Users/adam/Developer/vcs/github.twardoch/pub/twat-packages/_good/pyfs-utils/README.md

@@ -1,1 +1,4 @@
-../AUTHORS.md
+# Contributors
+
+* Adam Twardoch <adam+github@twardoch.com>
+

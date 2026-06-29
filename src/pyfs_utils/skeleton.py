@@ -1,28 +1,19 @@
-"""
-This is a skeleton file that can serve as a starting point for a Python
-console script. To run this script uncomment the following lines in the
-``[options.entry_points]`` section in ``setup.cfg``::
+# this_file: src/pyfs_utils/skeleton.py
+"""Fibonacci CLI demo — placeholder showing the pyfs-utils entry-point pattern.
 
-    console_scripts =
-         fibonacci = pyfs_utils.skeleton:run
+This module exists as a structural template while the real filesystem utilities
+are being developed.  It can be removed once substantive modules are added.
 
-Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
-which will install the command ``fibonacci`` inside your current environment.
+Usage::
 
-Besides console scripts, the header (i.e. until ``_logger``...) of this file can
-also be used as template for Python modules.
-
-Note:
-    This skeleton file can be safely removed if not needed!
-
-References:
-    - https://setuptools.readthedocs.io/en/latest/userguide/entry_point.html
-    - https://pip.pypa.io/en/stable/reference/pip_install
+    pyfs-fibonacci 10       # prints the 10th Fibonacci number
+    python -m pyfs_utils.skeleton 10
 """
 
 import argparse
 import logging
 import sys
+from collections.abc import Sequence
 
 from pyfs_utils import __version__
 
@@ -33,57 +24,69 @@ __license__ = "CC0-1.0"
 _logger = logging.getLogger(__name__)
 
 
-# ---- Python API ----
-# The functions defined in this section can be imported by users in their
-# Python scripts/interactive interpreter, e.g. via
-# `from pyfs_utils.skeleton import fib`,
-# when using this Python module as a library.
+# ---------------------------------------------------------------------------
+# Python API
+# ---------------------------------------------------------------------------
 
 
-def fib(n):
-    """Fibonacci example function
+def fib(n: int) -> int:
+    """Return the *n*-th Fibonacci number (1-indexed, F(1)=1, F(2)=1).
 
     Args:
-      n (int): integer
+        n: A positive integer position in the Fibonacci sequence.
 
     Returns:
-      int: n-th Fibonacci number
+        The *n*-th Fibonacci number.
+
+    Raises:
+        AssertionError: If *n* is not a positive integer.
+
+    Examples:
+        >>> fib(1)
+        1
+        >>> fib(10)
+        55
     """
-    assert n > 0
+    assert n > 0, f"n must be a positive integer, got {n}"
     a, b = 1, 1
-    for i in range(n - 1):
+    for _ in range(n - 1):
         a, b = b, a + b
     return a
 
 
-# ---- CLI ----
-# The functions defined in this section are wrappers around the main Python
-# API allowing them to be called directly from the terminal as a CLI
-# executable/script.
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
 
 
-def parse_args(args):
-    """Parse command line parameters
+def parse_args(args: Sequence[str]) -> argparse.Namespace:
+    """Parse command-line parameters.
 
     Args:
-      args (List[str]): command line parameters as list of strings
-          (for example  ``["--help"]``).
+        args: Command-line arguments as a list of strings,
+            e.g. ``["--verbose", "42"]``.
 
     Returns:
-      :obj:`argparse.Namespace`: command line parameters namespace
+        Parsed :class:`argparse.Namespace` with attributes ``n`` and
+        ``loglevel``.
     """
-    parser = argparse.ArgumentParser(description="Just a Fibonacci demonstration")
+    parser = argparse.ArgumentParser(description="Fibonacci demonstration for pyfs-utils")
     parser.add_argument(
         "--version",
         action="version",
         version=f"pyfs-utils {__version__}",
     )
-    parser.add_argument(dest="n", help="n-th Fibonacci number", type=int, metavar="INT")
+    parser.add_argument(
+        dest="n",
+        help="compute the n-th Fibonacci number",
+        type=int,
+        metavar="INT",
+    )
     parser.add_argument(
         "-v",
         "--verbose",
         dest="loglevel",
-        help="set loglevel to INFO",
+        help="set log level to INFO",
         action="store_const",
         const=logging.INFO,
     )
@@ -91,59 +94,51 @@ def parse_args(args):
         "-vv",
         "--very-verbose",
         dest="loglevel",
-        help="set loglevel to DEBUG",
+        help="set log level to DEBUG",
         action="store_const",
         const=logging.DEBUG,
     )
     return parser.parse_args(args)
 
 
-def setup_logging(loglevel):
-    """Setup basic logging
+def setup_logging(loglevel: int | None) -> None:
+    """Configure root logger.
 
     Args:
-      loglevel (int): minimum loglevel for emitting messages
+        loglevel: Minimum log level to emit.  ``None`` disables logging.
     """
+    if loglevel is None:
+        return
     logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
     logging.basicConfig(
-        level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
+        level=loglevel,
+        stream=sys.stdout,
+        format=logformat,
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
 
-def main(args):
-    """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
-
-    Instead of returning the value from :func:`fib`, it prints the result to the
-    ``stdout`` in a nicely formatted message.
+def main(args: Sequence[str]) -> None:
+    """Entry point for the ``pyfs-fibonacci`` CLI command.
 
     Args:
-      args (List[str]): command line parameters as list of strings
-          (for example  ``["--verbose", "42"]``).
+        args: Command-line arguments as a list of strings,
+            e.g. ``["--verbose", "42"]``.
     """
-    args = parse_args(args)
-    setup_logging(args.loglevel)
-    _logger.debug("Starting crazy calculations...")
-    print(f"The {args.n}-th Fibonacci number is {fib(args.n)}")
-    _logger.info("Script ends here")
+    parsed = parse_args(args)
+    setup_logging(parsed.loglevel)
+    _logger.debug("Starting calculation…")
+    print(f"The {parsed.n}-th Fibonacci number is {fib(parsed.n)}")
+    _logger.info("Done.")
 
 
-def run():
-    """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
+def run() -> None:
+    """Invoke :func:`main` with arguments from :data:`sys.argv`.
 
-    This function can be used as entry point to create console scripts with setuptools.
+    Registered as the ``pyfs-fibonacci`` console-script entry point.
     """
     main(sys.argv[1:])
 
 
 if __name__ == "__main__":
-    # ^  This is a guard statement that will prevent the following code from
-    #    being executed in the case someone imports this file instead of
-    #    executing it as a script.
-    #    https://docs.python.org/3/library/__main__.html
-
-    # After installing your project with pip, users can also run your Python
-    # modules as scripts via the ``-m`` flag, as defined in PEP 338::
-    #
-    #     python -m pyfs_utils.skeleton 42
-    #
     run()

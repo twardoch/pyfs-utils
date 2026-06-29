@@ -1,6 +1,6 @@
 # Development Guide for pyfs-utils
 
-This guide explains how to set up your development environment and contribute to `pyfs-utils`.
+This guide covers setting up your development environment and contributing to `pyfs-utils`.
 
 ## Quick Start
 
@@ -35,7 +35,7 @@ This guide explains how to set up your development environment and contribute to
 
 ### Available Commands
 
-The project includes several convenient commands via Makefile:
+These commands are available via Makefile:
 
 - `make help` - Show all available commands
 - `make setup` - Set up development environment
@@ -50,7 +50,7 @@ The project includes several convenient commands via Makefile:
 
 ### Testing
 
-Tests are located in the `tests/` directory and use pytest:
+Tests live in `tests/` and use pytest:
 
 ```bash
 # Run all tests
@@ -65,7 +65,7 @@ python -m pytest tests/ -v --cov=pyfs_utils --cov-report=html
 
 ### Code Quality
 
-The project uses several tools to maintain code quality:
+Tools used for code quality:
 
 - **flake8**: Linting
 - **black**: Code formatting
@@ -81,7 +81,7 @@ make check
 
 ### Versioning
 
-The project uses semantic versioning with git tags:
+Versioning uses semantic versioning with git tags:
 
 1. **Git-based versioning**: Version is automatically determined from git tags using `setuptools_scm`
 2. **Semantic versioning**: Use format `MAJOR.MINOR.PATCH` (e.g., `1.0.0`)
@@ -108,7 +108,7 @@ The project uses semantic versioning with git tags:
 
 ### CI/CD Pipeline
 
-The project uses GitHub Actions for CI/CD:
+GitHub Actions handles CI/CD:
 
 - **CI Pipeline** (`.github/workflows/ci.yml`):
   - Runs on push/PR to main/develop
@@ -130,7 +130,7 @@ The project uses GitHub Actions for CI/CD:
 
 ### Development Scripts
 
-The `scripts/` directory contains useful development scripts:
+The `scripts/` directory contains:
 
 - `dev-setup.sh` - Set up development environment
 - `test.sh` - Run tests
@@ -189,14 +189,15 @@ pyfs-utils/
 
 ### Dependencies
 
-The project has minimal dependencies:
+Minimal dependencies:
+
 - Core: `fs` (PyFilesystem2) and related packages
 - Development: `pytest`, `black`, `flake8`, `isort`
 - Build: `build`, `setuptools`, `setuptools_scm`
 
 ### Environment Variables
 
-No special environment variables are required for development.
+No special environment variables required for development.
 
 ### Troubleshooting
 
@@ -212,4 +213,4 @@ No special environment variables are required for development.
 - Ensure git repository has tags: `git tag --list`
 - Check setuptools_scm configuration in `pyproject.toml`
 
-For more help, check the issue tracker or create a new issue.
+For additional help, check the issue tracker or create a new issue.
